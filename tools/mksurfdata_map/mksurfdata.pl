@@ -47,7 +47,8 @@ my $nldef_file     = "$scrdir/../../bld/namelist_files/namelist_definition_ctsm.
 
 my $definition = Build::NamelistDefinition->new( $nldef_file );
 
-my $CSMDATA = "/glade/p/cesm/cseg/inputdata";
+#my $CSMDATA = "/glade/p/cesm/cseg/inputdata";
+my $CSMDATA = "/data/inputs/CESM/inputdata";
 
 my %opts = ( 
                hgrid=>"all", 

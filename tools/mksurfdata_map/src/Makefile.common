@@ -30,11 +30,13 @@ RM = rm
 
 # Check for the netcdf library and include directories 
 ifeq ($(LIB_NETCDF),$(null))
-  LIB_NETCDF := /usr/local/lib
+  #LIB_NETCDF := /usr/local/lib
+  LIB_NETCDF := /zeus/opt/intel20.1/netcdf/C_4.7.4-F_4.5.3_CXX_4.3.1/lib
 endif
 
 ifeq ($(INC_NETCDF),$(null))
-  INC_NETCDF := /usr/local/include
+  #INC_NETCDF := /usr/local/include
+  INC_NETCDF := /zeus/opt/intel20.1/netcdf/C_4.7.4-F_4.5.3_CXX_4.3.1/include
 endif
 
 ifeq ($(MOD_NETCDF),$(null))
