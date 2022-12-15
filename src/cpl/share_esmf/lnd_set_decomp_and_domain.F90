@@ -60,6 +60,7 @@ contains
     type(ESMF_Mesh)     :: mesh_maskinput
     type(ESMF_Mesh)     :: mesh_lndinput
     type(ESMF_DistGrid) :: distgrid_ctsm
+    type(ESMF_Grid)     :: model_grid
     integer             :: g,n             ! indices
     integer             :: nlnd, nocn      ! local size of arrays
     integer             :: gsize           ! global size of grid
@@ -100,8 +101,12 @@ contains
     if (trim(driver) == 'cmeps') then
        ! Read in mask meshfile if needed
        if (trim(meshfile_mask) /= trim(meshfile_lnd)) then
-          mesh_maskinput = ESMF_MeshCreate(filename=trim(meshfile_mask), fileformat=ESMF_FILEFORMAT_ESMFMESH, rc=rc)
+          model_grid = ESMF_GridCreate(filename=trim(meshfile_mask),fileformat=ESMF_FILEFORMAT_SCRIP, addCornerStagger=.true., rc=rc)
           if (ChkErr(rc,__LINE__,u_FILE_u)) return
+          mesh_maskinput = ESMF_MeshCreate(grid=model_grid, rc=rc)
+          if (ChkErr(rc,__LINE__,u_FILE_u)) return
+          !mesh_maskinput = ESMF_MeshCreate(filename=trim(meshfile_mask), fileformat=ESMF_FILEFORMAT_ESMFMESH, rc=rc)
+          !if (ChkErr(rc,__LINE__,u_FILE_u)) return
        end if
 
        ! Determine lndmask_glob and lndfrac_glob
