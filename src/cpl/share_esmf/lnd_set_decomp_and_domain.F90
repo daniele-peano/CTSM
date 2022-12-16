@@ -4,6 +4,7 @@ module lnd_set_decomp_and_domain
   use ESMF         , only : ESMF_Array, ESMF_ArrayCreate, ESMF_SUCCESS, ESMF_MeshCreate, ESMF_FILEFORMAT_ESMFMESH
   use ESMF         , only : ESMF_MeshGet, ESMF_DistGridGet, ESMF_Grid, ESMF_Field, ESMF_FieldGet, ESMF_FieldCreate, ESMF_FieldDestroy
   use ESMF         , only : ESMF_TYPEKIND_R8, ESMF_MESHLOC_ELEMENT, ESMF_VMAllReduce, ESMF_REDUCE_SUM
+  use ESMF         , only : ESMF_FILEFORMAT_SCRIP, ESMF_GridCreate
   use shr_kind_mod , only : r8 => shr_kind_r8, cl=>shr_kind_cl
   use shr_sys_mod  , only : shr_sys_abort
   use shr_log_mod  , only : errMsg => shr_log_errMsg
