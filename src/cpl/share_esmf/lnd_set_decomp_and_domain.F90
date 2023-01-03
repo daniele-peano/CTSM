@@ -47,6 +47,7 @@ contains
     use clm_varpar    , only : nlevsoi
     use clm_varctl    , only : use_soil_moisture_streams
     use ESMF          , only : ESMF_DistGridCreate
+    use ncdio_pio     , only : file_desc_t, ncd_pio_openfile, ncd_pio_closefile, ncd_inqdid
 
     ! input/output variables
     character(len=*)    , intent(in)    :: driver ! cmeps or lilac
@@ -60,8 +61,8 @@ contains
     ! local variables
     type(ESMF_Mesh)     :: mesh_maskinput
     type(ESMF_Mesh)     :: mesh_lndinput
+    type(ESMF_Grid)     :: grid_maskinput
     type(ESMF_DistGrid) :: distgrid_ctsm
-    type(ESMF_Grid)     :: model_grid
     integer             :: g,n             ! indices
     integer             :: nlnd, nocn      ! local size of arrays
     integer             :: gsize           ! global size of grid
@@ -73,6 +74,9 @@ contains
     integer  , pointer  :: gindex_ctsm(:)  ! global index space for land and ocean points
     integer  , pointer  :: lndmask_glob(:)
     real(r8) , pointer  :: lndfrac_glob(:)
+    type(file_desc_t)   :: ncid    ! netcdf file id
+    integer             :: dimid   ! netCDF dimension id
+    logical             :: dim_exists
     !-------------------------------------------------------------------------------
 
     rc = ESMF_SUCCESS
@@ -100,15 +104,31 @@ contains
     if (ChkErr(rc,__LINE__,u_FILE_u)) return
 
     if (trim(driver) == 'cmeps') then
+
        ! Read in mask meshfile if needed
-       if (trim(meshfile_mask) /= trim(meshfile_lnd)) then
-          model_grid = ESMF_GridCreate(filename=trim(meshfile_mask),fileformat=ESMF_FILEFORMAT_SCRIP, addCornerStagger=.true., rc=rc)
+       call ncd_pio_openfile (ncid, trim(meshfile_mask), 0)
+       call ncd_inqdid(ncid, 'elementCount', dimid, dim_exists)
+       if (dim_exists) then
+          if (masterproc) then
+             write(iulog, '(a)') ' input mask mesh format for meshfile_mask is ESMF_FILEFORMAT_MESH'
+          end if
+          mesh_maskinput = ESMF_MeshCreate(trim(meshfile_mask), fileformat=ESMF_FILEFORMAT_ESMFMESH, rc=rc)
           if (ChkErr(rc,__LINE__,u_FILE_u)) return
-          mesh_maskinput = ESMF_MeshCreate(grid=model_grid, rc=rc)
-          if (ChkErr(rc,__LINE__,u_FILE_u)) return
-          !mesh_maskinput = ESMF_MeshCreate(filename=trim(meshfile_mask), fileformat=ESMF_FILEFORMAT_ESMFMESH, rc=rc)
-          !if (ChkErr(rc,__LINE__,u_FILE_u)) return
+       else
+          call ncd_inqdid(ncid, 'grid_size', dimid, dim_exists)
+          if ( dim_exists) then
+             if (masterproc) then
+                write(iulog, '(a)') ' input mask mesh format for meshfile_mask is ESMF_FILEFORMAT_MESH'
+             end if
+             grid_maskinput = ESMF_GridCreate(filename=trim(meshfile_mask), fileformat=ESMF_FILEFORMAT_SCRIP, addCornerStagger=.true., rc=rc)
+             if (ChkErr(rc,__LINE__,u_FILE_u)) return
+             mesh_maskinput = ESMF_MeshCreate(grid=grid_maskinput, rc=rc)
+             if (ChkErr(rc,__LINE__,u_FILE_u)) return
+          else
+             call shr_sys_abort('ERROR: input mesh must either have ESMF_FILEFORMAT_ESMFMESH or ESMF_FILEFORMAT_SCRIP')
+          end if
        end if
+       call ncd_pio_closefile(ncid)
 
        ! Determine lndmask_glob and lndfrac_glob
        if (trim(meshfile_mask) /= trim(meshfile_lnd)) then
