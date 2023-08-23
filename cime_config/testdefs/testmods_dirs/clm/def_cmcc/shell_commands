@@ -1,0 +1,6 @@
+./xmlchange NTASKS=72
+./xmlchange DATM_YR_ALIGN=1850
+./xmlchange DATM_YR_END=1850
+./xmlchange DATM_YR_START=1850
+./xmlchange DATM_MODE=CLMCRUNCEPv7
+

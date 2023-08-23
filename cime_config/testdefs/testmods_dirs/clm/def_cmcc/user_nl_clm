@@ -1,0 +1,9 @@
+fsurdat = '$DIN_LOC_ROOT/lnd/clm2/surfdata_map/surfdata_0.47x0.63_16pfts_Irrig_CMIP6_simyr1850_c170919.nc'
+finidat= '$DIN_LOC_ROOT/lnd/clm2/initdata_map/clmi.I1850Clm50BgcCrop-ciso.1366-01-01.0.47x0.63_tn0.25v3_simyr1850_c230210.nc'
+
+hist_empty_htapes=.true.
+hist_mfilt = 1,
+hist_nhtfrq = -24,
+hist_avgflag_pertape = 'A',
+hist_fincl1 = 'SOILLIQ', 'QVEGT', 'H2OSNO', 'TLAI', 'FSNO', 'SOILWATER_10CM', 'SOILICE','QRUNOFF', 'SNOWDP','QSOIL','QVEGE','QOVER','QDRAI','H2OSOI','QFLX_SNOW_GRND','TBOT'
+

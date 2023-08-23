@@ -557,6 +557,23 @@
     <lname>2000_SATM_CLM50%NWP-SP_SICE_SOCN_SROF_SGLC_SWAV</lname>
   </compset>
 
+  <!-- compsets using HYDROS river routing scheme - CMCC-CM -->
+
+  <compset>
+    <alias>IHistDgswpC51bcHDS</alias>
+    <lname>HIST_DATM%GSWP3v1_CLM51%BGC-CROP_SICE_SOCN_HYDROS_SGLC_SWAV</lname>
+  </compset>
+
+  <compset>
+    <alias>I2000DgswpC51bcHDS</alias>
+    <lname>2000_DATM%GSWP3v1_CLM51%BGC-CROP_SICE_SOCN_HYDROS_SGLC_SWAV</lname>
+  </compset>
+
+  <compset>
+    <alias>I1850DgswpC51bcHDS</alias>
+    <lname>1850_DATM%GSWP3v1_CLM51%BGC-CROP_SICE_SOCN_HYDROS_SGLC_SWAV</lname>
+  </compset>
+
   <!-- changes to driver xml variables - in case of a tie in the values matches the last match is taken -->
 
   <entries>
