@@ -1,5 +1,8 @@
 fsurdat = '$DIN_LOC_ROOT/lnd/clm2/surfdata_map/surfdata_0.47x0.63_16pfts_Irrig_CMIP6_simyr1850_c170919.nc'
+flanduse_timeseries='$DIN_LOC_ROOT/lnd/clm2/surfdata_map/landuse.timeseries_0.47x0.63_hist_16pfts_Irrig_CMIP6_simyr1850-2015_c171025.nc'
 finidat= '$DIN_LOC_ROOT/lnd/clm2/initdata_map/clmi.I1850Clm50BgcCrop-ciso.1366-01-01.0.47x0.63_tn0.25v3_simyr1850_c230210.nc'
+
+use_init_interp = .true.
 
 hist_empty_htapes=.true.
 hist_mfilt = 1,
