@@ -939,6 +939,11 @@ Perturbation limit when doing error growth test
 If FALSE, don't write any restart files.
 </entry>
 
+<entry id="snoage_scl" type="real" category="clm_physics"
+       group="clm_inparm" valid_values="" >
+If greater than zero it activates the snow aging scaling factor using the provided value.
+</entry>
+
 <entry id="urban_hac" type="char*16" category="clm_physics"
        group="clmu_inparm" valid_values="OFF,ON,ON_WASTEHEAT" >
 Turn urban air conditioning/heating ON or OFF and add wasteheat:
